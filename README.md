@@ -1,4 +1,4 @@
-# HY3D: Hierarchical Hyperbolic Prototype Network
+# HY3D: TAHL3DPC
 
 ![model](model.png)
 
