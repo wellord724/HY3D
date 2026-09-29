@@ -1,10 +1,9 @@
 # HY3D: TAHL3DPC
 
 ![model](model.png)
+The unified PartNeXt/Campus3D ablation experiment code allows switching between the model and dataset using the `--model` and `--dataset` parameters.
 
-统一的 PartNeXt / Campus3D 消融实验代码，通过 `--model` 和 `--dataset` 参数切换模型与数据集。
-
-## 环境安装
+## Environmental installation
 
 ```bash
 conda create -n hy3d python=3.8
@@ -12,51 +11,47 @@ conda activate hy3d
 pip install -r requirements.txt
 ```
 
-## 快速开始
+## Quick Start
 
 ```bash
-# 训练（默认数据集 partnext）
+# Training (default dataset PartNeXt)
 python -m Hy3D.run --model baseline   # PointNet++ Euclidean baseline
-python -m Hy3D.run --model m0          # + 双曲投影 + Euclidean 分类头
-python -m Hy3D.run --model m1          # + Mobius 分类头
-python -m Hy3D.run --model m2          # m0 + PCT 损失
-python -m Hy3D.run --model hy3d        # m1 + PCT 损失（完整模型）
+python -m Hy3D.run --model m0 # + hyperbolic projection + Euclidean classifier head
+python -m Hy3D.run --model m1 # + Mobius classifier head
+python -m Hy3D.run --model m2 # m0 + PCT loss
+python -m Hy3D.run --model hy3d # m1 + PCT loss (complete model)
 
-# 切换到 Campus3D 数据集
+# Switch to Campus3D
 python -m Hy3D.run --dataset campus3d --model hy3d
 
-# 测试
+# Eval
 python -m Hy3D.run --model hy3d --eval
 python -m Hy3D.run --dataset campus3d --model m1 --eval
 
-# 自定义实验名（不指定则使用默认值）
+# Custom experiment name (default name will be used if not specified)
 python -m Hy3D.run --model m0 --exp_name MY_M0_RUN
 ```
 
-## 模型预设
+## Model Preset
 
-| model    | SEG_HEAD_TYPE  | PCT_ENABLE | 说明                              |
+| model    | SEG_HEAD_TYPE  | PCT_ENABLE | Explanation                       |
 |----------|----------------|------------|-----------------------------------|
-| baseline | euclidean_raw  | False      | 纯 Euclidean PointNet++           |
-| m0       | euclidean_hyp  | False      | + 双曲投影 + Conv 分类头          |
-| m1       | mobius         | False      | + Mobius 分类头                   |
-| m2       | euclidean_hyp  | True       | m0 + PCT 损失                     |
-| hy3d     | mobius         | True       | m1 + PCT 损失（完整模型）         |
+| baseline | euclidean_raw  | False      | Pure Euclidean PointNet++           |
+| m0       | euclidean_hyp  | False      | + hyperbolic projection + Conv head          |
+| m1       | mobius         | False      | + Mobius head                   |
+| m2       | euclidean_hyp  | True       | m0 + PCT loss                     |
+| hy3d     | mobius         | True       | m1 + PCT loss (complete model)         |
 
-## 数据集
+## Datasets
 
-| dataset  | 说明                    | 配置目录                          |
+| dataset  | Explanation                      | Config                         |
 |----------|-------------------------|-----------------------------------|
-| partnext | PartNeXt 数据集（默认） | `Hy3D/configs/partnext/`          |
-| campus3d | Campus3D 数据集         | `Hy3D/configs/campus3d/`          |
+| partnext | PartNeXt | `Hy3D/configs/partnext/`          |
+| campus3d | Campus3D         | `Hy3D/configs/campus3d/`          |
 
-也可用 `--config_dir` 指定自定义配置目录。
+You can also use `--config_dir` to specify a custom configuration directory.
 
-- PartNeXt 下载：https://github.com/AuthorityWang/PartNeXt
-- Campus3D 下载：https://github.com/shinke-li/Campus3D
+- PartNeXt Download：https://github.com/AuthorityWang/PartNeXt
+- Campus3D Download：https://github.com/shinke-li/Campus3D
 
-## 冒烟测试
 
-```bash
-python -m Hy3D.smoke_test
-```
