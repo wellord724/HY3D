@@ -1,0 +1,13 @@
+# Python: 3.8.10
+# PyTorch build: CUDA 10.1
+-f https://download.pytorch.org/whl/torch_stable.html
+
+h5py==3.1.0
+scipy==1.5.4
+numba==0.52.0
+numpy==1.17.5
+open3d==0.12.0
+PyYAML==5.4.1
+scikit-learn==0.24.1
+torch==1.6.0+cu101
+torchvision==0.7.0+cu101

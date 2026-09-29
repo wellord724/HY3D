@@ -1,0 +1,14 @@
+DATASET:
+  DATA:
+    DATASET_NAME: "PartNeXt"
+    PARTNEXT_CACHE: "data/partnext_campus5/samples"
+    SPLIT_DIR: "data/partnext_campus5"
+    TAXONOMY_FILE: "data/partnext_campus5/taxonomy.json"
+    H_MATRIX_LIST_FILE: "data/partnext_campus5/partnext_matrix_file_list.yaml"
+    SORT_H_MATRIX_BY_CLASS_NUM: false
+    LABEL_NUMBER:
+      - 63
+      - 264
+      - 638
+      - 919
+      - 1260

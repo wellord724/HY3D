@@ -1,0 +1,78 @@
+TRAIN:
+    LEARNING_RATE: 0.01
+    MOMENTUM: 0.9
+    BATCH_SIZE: 32
+    NUM_WORKERS: 8
+    MAX_EPOCH: 80
+    SCHEDULER: step
+    IS_PRETRAINED: False
+    PRETRAINED_MODEL_PATH: checkpoints/HIERHYP/models/model_best.t7
+    OUTPUT_DIR: log/
+    DROPOUT_RATE: 0.5
+
+    CONSISTENCY_LOSS: False
+    CONSISTENCY_WEIGHTS: [0.05, 0.05, 0.05, 0.05]
+    LOSS_WEIGHTS: [1.0, 1.0, 1.0, 1.0, 1.0]
+
+    # --- PCT (Prototype-based Consistency/Triplet/Radius) ---
+    # Enabled only for the "hierhyp" model preset.
+    PCT_ENABLE: True
+    PCT_START_EPOCH: 8
+    PCT_BANK_WARMUP_EPOCH: 5
+    PCT_MOMENTUM: 0.85
+    PCT_MOMENTUM_SCHEDULE:
+        - [12, 0.5]
+        - [30, 0.7]
+        - [-1, 0.85]
+    PCT_TEMP: 2.0
+    PCT_CONS_WEIGHT: 0.05
+    PCT_TRI_ENABLE: True
+    PCT_TRI_WEIGHT: 0.10
+    PCT_TRI_MARGIN: 0.05
+    PCT_RADIUS_WEIGHT: 0.05 # 0.02
+    PCT_RADIUS_MARGIN: 0.05
+    PCT_SAMPLE_SIZE: 512
+
+    PCT_CURRICULUM:
+        CONS_START_EPOCH: 13
+        TRI_START_EPOCH: 13
+        RADIUS_START_EPOCH: 25
+        RAMP_EPOCHS: 10
+
+    PCT_SAMPLING:
+        STRATEGY: leaf_class_balanced
+        MAX_POINTS: 512
+        MIN_POINTS_PER_PRESENT_LEAF: 2
+        MAX_POINTS_PER_PRESENT_LEAF: 16
+
+    PCT_BANK_UPDATE:
+        TIMING: after_optimizer
+        AGGREGATION: object_then_class
+
+    PCT_RADIUS_POLICY:
+        SKIP_REPEATED_NODE_EDGE: True
+        SCALE_MARGIN_BY_REAL_DEPTH_DELTA: True
+
+    # --- Hyperbolic geometry ---
+    HYP_C: 0.2
+    HYP_CLIP_R: 2.3
+    HYP_TANGENT_SCALE: 0.2
+    SEG_HEAD_TYPE: mobius
+    MOBIUS_LOGIT_SCALE: 10.0
+    SZ_EMBED: 128
+
+DEVICES:
+    GPU_ID: [0]
+    SEED: 1
+
+EVAL:
+    MODEL_NAME: model_best
+    PLOT_HYPERBOLIC: False
+    PLOT_SAMPLE_SIZE: 3000
+    PLOT_SAMPLING: balanced
+    PLOT_LABEL_LEVEL: -1
+    PLOT_PROJECTION: tangent_pca
+    PLOT_RADIUS_MODE: fit_data
+    PLOT_RADIUS_PERCENTILE: 99.0
+    PLOT_SEED: 1
+    PLOT_OUTPUT_NAME: hyperbolic_distribution.png
